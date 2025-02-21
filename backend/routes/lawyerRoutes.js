@@ -21,5 +21,7 @@ const upload = multer({
 // Routes
 router.post('/ingest', upload.single('file'), ingestionController.ingestLawyers);
 router.get('/', ingestionController.getAllLawyers);
+router.get('/expertise/:expertise', ingestionController.getLawyersByExpertise);
+router.get('/location/:location', ingestionController.getLawyersByLocation);
 
 module.exports = router;

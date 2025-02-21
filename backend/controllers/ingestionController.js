@@ -149,7 +149,48 @@ const ingestionController = {
                 error: error.message
             });
         }
-    }
+    },
+
+    //Get Lawyers based on expertise, expertise is in [String]
+    getLawyersByExpertise: async (req, res) => {
+        try {
+            console.log(req);
+            const expertise = req.params.expertise;
+            console.log(expertise);
+            const lawyers = await Lawyer.find({ expertise: { $in: expertise } });
+            res.status(200).json({
+                success: true,
+                count: lawyers.length,
+                data: lawyers
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: 'Failed to fetch lawyers',
+                error: error.message
+            });
+        }
+    },
+
+    //Get Lawyers based on location, location is in String
+    getLawyersByLocation: async (req, res) => {
+        try {
+            const location = req.params.location;
+            const lawyers = await Lawyer.find({ location });
+            res.status(200).json({
+                success: true,
+                count: lawyers.length,
+                data: lawyers
+            });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: 'Failed to fetch lawyers',
+                error: error.message
+            });
+        }
+    },
+    
 };
 
 module.exports = ingestionController;
