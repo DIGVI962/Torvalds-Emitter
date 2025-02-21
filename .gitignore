@@ -1,3 +1,11 @@
+# ignore frontend/node_modules
+frontend/node_modules
 # ignore backend/node_modules
 backend/node_modules
 .env
+# ignore in ml
+ml/.env
+ml/.pylintrc
+ml/settings.json
+ml/__pycache__
+ml/models/__pycache__
