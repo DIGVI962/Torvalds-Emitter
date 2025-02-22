@@ -27,6 +27,7 @@ from rag_helper import RAGHelper
 
 
 load_dotenv()
+port = int(os.environ.get("PORT", 10000))
 
 
 # FastAPI setup
@@ -275,3 +276,8 @@ async def grade_chat(thread_id: str) -> str:
         return "NAN"
 
     return grade_chat_history(state)
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
