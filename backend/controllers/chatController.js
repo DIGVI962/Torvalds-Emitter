@@ -3,38 +3,71 @@ require('dotenv').config();
 const axios = require('axios');
 
 const chatController = {
-    generateResponse: async (msg, threadId) => {
+    generateResponse: async (req, res) => {
+        const { query, thread_Id } = req.body;
         try {
-            if (!msg) {
+            if (!query) {
                 return {
                     error: 'Missing required fields',
                     details: 'Message is required'
                 };
             }
-            console.log('Message in generateResponse' + msg);
+            console.log('Message in generateResponse' + query);
             const completionRequest = {
-                query: msg,
-                thread_id: threadId
+                query: query,
+                thread_Id: thread_Id
             };
-            const completionResponse = await axios.post('https://dfbf-38-188-110-250.ngrok-free.app/chat/v2', data = completionRequest);
-            const completionData = completionResponse.data;
+            const completionResponse = await axios.post('https://dfbf-38-188-110-250.ngrok-free.app/chat/v2', data = {query: query, thread_id: thread_Id});
+            const completionData = completionResponse.message;
             // Handle JSON chunks and combine messages
-            console.log(completionData);
-            return {
+            console.log(completionResponse.message);
+            return res = {
                 success: true,
-                message: combinedMessage,
-                threadId: threadId,
+                message: completionResponse.message,
+                thread_Id: thread_Id,
                 error: '',
                 details: ''
             };
         } catch (error) {
             console.error('Failed to generate response:', error);
-            return {
+            return res = {
                 success: false,
                 error: 'Failed to generate response',
                 details: error.message,
                 message: '',
-                threadId: threadId,
+                thread_Id: thread_Id,
+            };
+        }
+    },
+
+    generateAnswer: async (req, res) => {
+        const {query, thread_id} = req.body;
+        try{
+            if(!query){ 
+                return {
+                    error: 'Missing required fields',
+                    details: 'Message is required'
+                }
+            }
+            const resp = await axios.post('https://dfbf-38-188-110-250.ngrok-free.app/chat/v2',{query: query, thread_id: thread_id});
+            const completionData = await resp.data;
+            console.log(completionData);
+            return res = {
+                success: true,
+                message: completionData.message,
+                thread_id: thread_id,
+                error: '',
+                details: ''
+            };
+        }
+        catch(error){
+            console.error('Failed to generate response:', error);
+            return res = {
+                success: false,
+                error: 'Failed to generate response',
+                details: error.message,
+                message: '',
+                thread_id: thread_id,
             };
         }
     },

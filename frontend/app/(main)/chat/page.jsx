@@ -6,17 +6,26 @@ import { Card } from '@/components/ui/card';
 import { Send } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 import TiptapViewer from '@/components/TiptapViewer';
+import { Select } from '@/components/ui/select';
+import { useTranslation } from 'react-i18next';
+import { languages } from '../../../lib/langconf';
+import '../../../lib/i18nconf';
 
 const ChatPage = () => {
 	const [messages, setMessages] = useState([]);
 	const [query, setQuery] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [threadId, setThreadId] = useState(null);
+	const { t, i18n } = useTranslation();
 
 	// Generate thread ID when component mounts
 	useEffect(() => {
 		setThreadId(uuidv4());
 	}, []);
+
+	const handleLanguageChange = (event) => {
+		i18n.changeLanguage(event.target.value);
+	};
 
 	const handleSendMessage = async () => {
 		if (!query.trim() || !threadId) return;
@@ -75,25 +84,34 @@ const ChatPage = () => {
 	return (
 		<div className='flex flex-col h-screen bg-background text-foreground'>
 			{/* Chat Header */}
-			<header className='bg-card text-card-foreground p-4 shadow-md text-center text-xl font-semibold'>
-				<span className='text-muted-foreground text-xs'>
-					{threadId && `Thread ID: ${threadId}`}
-				</span>{' '}
-				- <span className='text-primary'>Law Saarthi</span>
+			<header className='bg-card text-card-foreground p-4 shadow-md text-center text-xl font-semibold flex justify-between items-center'>
+				<div>
+					<span className='text-muted-foreground text-xs'>
+						{threadId && `${t('threadId')} ${threadId}`}
+					</span>{' '}
+					- <span className='text-primary'>Law Saarthi</span>
+				</div>
+				<Select
+					value={i18n.language}
+					onChange={handleLanguageChange}
+					className="w-40"
+				>
+					{languages.map((lang) => (
+						<option key={lang.code} value={lang.code}>
+							{lang.name}
+						</option>
+					))}
+				</Select>
 			</header>
 
 			{/* Chat Messages */}
 			<div className='flex-1 overflow-y-auto p-6 space-y-4'>
-				{/* Show an opening message if chat is empty */}
 				{messages.length === 0 && (
 					<div className='text-center text-muted-foreground'>
 						<h2 className='text-2xl font-semibold'>
-							Hi, I am <span className='text-primary'>Law Saarthi</span> 👋
+							<span className='text-primary'>{t('welcome')}</span> 👋
 						</h2>
-						<p className='text-lg'>
-							Your trusted companion on your legal journey. Ask me anything
-							about Indian laws!
-						</p>
+						<p className='text-lg'>{t('description')}</p>
 					</div>
 				)}
 
@@ -101,11 +119,10 @@ const ChatPage = () => {
 					{messages.map((msg) => (
 						<Card
 							key={msg.id}
-							className={`max-w-[90%] sm:max-w-xl lg:max-w-3xl px-5 py-3 rounded-lg break-words ${
-								msg.sender === 'user'
+							className={`max-w-[90%] sm:max-w-xl lg:max-w-3xl px-5 py-3 rounded-lg break-words ${msg.sender === 'user'
 									? 'bg-primary text-primary-foreground self-end ml-auto'
 									: 'bg-card text-card-foreground'
-							}`}
+								}`}
 						>
 							<TiptapViewer content={msg.text} />
 						</Card>
@@ -114,7 +131,7 @@ const ChatPage = () => {
 
 				{loading && (
 					<Card className='max-w-3xl px-5 py-3 rounded-lg bg-muted text-muted-foreground'>
-						Typing...
+						{t('typing')}
 					</Card>
 				)}
 			</div>
@@ -124,7 +141,7 @@ const ChatPage = () => {
 				<div className='flex items-center gap-4'>
 					<Input
 						type='text'
-						placeholder='Ask a legal question...'
+						placeholder={t('placeholder')}
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 						className='flex-1 px-4 py-8 text-lg bg-muted rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary lg:text-xl'
@@ -141,9 +158,7 @@ const ChatPage = () => {
 
 				{/* Disclaimer */}
 				<p className='text-center text-sm text-muted-foreground'>
-					⚠️ The information provided here is for educational purposes only and
-					should not be considered legal advice. Please consult a qualified
-					lawyer for specific legal concerns.
+					{t('disclaimer')}
 				</p>
 			</div>
 		</div>
