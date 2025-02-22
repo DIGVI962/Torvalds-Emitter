@@ -104,7 +104,7 @@ const ChatPage = () => {
 				</Select>
 			</header>
 
-			<div className='flex flex-col h-[400px] max-w-5xl mx-auto bg-background text-foreground'>
+			<div className='flex flex-col h-[400px] lg:h-[600px] max-w-5xl mx-auto bg-background text-foreground'>
 				{/* Chat Messages */}
 				<div className='flex-1 overflow-y-auto p-6 space-y-4  px-10'>
 					{messages.length === 0 && (
