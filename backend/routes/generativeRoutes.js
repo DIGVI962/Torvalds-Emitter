@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {handleTranslation} = require('../controllers/chatController');
+const {handleTranslation, generateAnswer} = require('../controllers/chatController');
 
-router.post('/',handleTranslation);
+router.post('/', handleTranslation);
+router.post('/generate', generateAnswer);
 
 module.exports = router;
