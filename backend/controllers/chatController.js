@@ -72,6 +72,38 @@ const chatController = {
         }
     },
 
+    getDomain: async (req, res) => {
+        const {id} = req.params;
+        try{
+            if(!id){
+                return {
+                    error: 'Missing required fields',
+                    details: 'Domain ID is required'
+                }
+            }
+            const resp = await axios.get('https://dfbf-38-188-110-250.ngrok-free.app/grade?thread_id='+id);
+            const domainData = await resp.data;
+            console.log(domainData);
+            return {
+                success: true,
+                message: domainData,
+                domain_id: id,
+                error: '',
+                details: ''
+            };
+        }
+        catch(error){
+            console.error('Failed to get domain:', error);
+            return {
+                success: false,
+                error: 'Failed to get domain',
+                details: error.message,
+                message: '',
+                domain_id: id,
+            };
+        }
+    },
+
     translateText: async (msg, threadId) => {
         try {
             const source = 'auto';
