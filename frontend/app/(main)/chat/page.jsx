@@ -121,7 +121,7 @@ const ChatPage = () => {
 						{messages.map((msg) => (
 							<Card
 								key={msg.id}
-								className={`max-w-[90%] sm:max-w-xl lg:max-w-3xl px-5 py-3 rounded-full break-words ${msg.sender === 'user'
+								className={`max-w-[90%] sm:max-w-xl lg:max-w-3xl px-5 py-3 rounded-2xl break-words ${msg.sender === 'user'
 									? 'bg-primary text-primary-foreground self-end ml-auto rounded-tr-none'
 									: 'bg-card text-card-foreground rounded-tl-none'
 									}`}
