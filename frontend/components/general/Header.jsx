@@ -13,7 +13,6 @@ const Header = () => {
 				width={24}
 				className='size-10'
 			/>
-
 			<div className='flex gap-4'>
 				<Link className={buttonVariants({ variant: 'ghost' })} href='/'>
 					{' '}
