@@ -82,7 +82,7 @@ const ChatPage = () => {
 	};
 
 	return (
-		<div className='flex flex-col h-screen bg-background text-foreground'>
+		<>
 			{/* Chat Header */}
 			<header className='bg-card text-card-foreground p-4 shadow-md text-center text-xl font-semibold flex justify-between items-center'>
 				<div>
@@ -104,64 +104,67 @@ const ChatPage = () => {
 				</Select>
 			</header>
 
-			{/* Chat Messages */}
-			<div className='flex-1 overflow-y-auto p-6 space-y-4'>
-				{messages.length === 0 && (
-					<div className='text-center text-muted-foreground'>
-						<h2 className='text-2xl font-semibold'>
-							<span className='text-primary'>{t('welcome')}</span> 👋
-						</h2>
-						<p className='text-lg'>{t('description')}</p>
+			<div className='flex flex-col h-screen max-w-5xl mx-auto bg-background text-foreground'>
+
+				{/* Chat Messages */}
+				<div className='flex-1 overflow-y-auto p-6 space-y-4  px-10'>
+					{messages.length === 0 && (
+						<div className='text-center text-muted-foreground'>
+							<h2 className='text-2xl font-semibold'>
+								<span className='text-primary'>{t('welcome')}</span> 👋
+							</h2>
+							<p className='text-lg'>{t('description')}</p>
+						</div>
+					)}
+
+					<div className='flex flex-col space-y-4'>
+						{messages.map((msg) => (
+							<Card
+								key={msg.id}
+								className={`max-w-[90%] sm:max-w-xl lg:max-w-3xl px-5 py-3 rounded-full break-words ${msg.sender === 'user'
+									? 'bg-primary text-primary-foreground self-end ml-auto rounded-tr-none'
+									: 'bg-card text-card-foreground rounded-tl-none'
+									}`}
+							>
+								<TiptapViewer content={msg.text} />
+							</Card>
+						))}
 					</div>
-				)}
 
-				<div className='flex flex-col space-y-4'>
-					{messages.map((msg) => (
-						<Card
-							key={msg.id}
-							className={`max-w-[90%] sm:max-w-xl lg:max-w-3xl px-5 py-3 rounded-lg break-words ${msg.sender === 'user'
-									? 'bg-primary text-primary-foreground self-end ml-auto'
-									: 'bg-card text-card-foreground'
-								}`}
-						>
-							<TiptapViewer content={msg.text} />
+					{loading && (
+						<Card className='max-w-3xl px-5 py-3 rounded-lg bg-muted text-muted-foreground'>
+							{t('typing')}
 						</Card>
-					))}
+					)}
 				</div>
 
-				{loading && (
-					<Card className='max-w-3xl px-5 py-3 rounded-lg bg-muted text-muted-foreground'>
-						{t('typing')}
-					</Card>
-				)}
-			</div>
+				{/* Chat Input */}
+				<div className='p-6 bg-card border-t max-w-5xl mx-auto flex flex-col gap-2'>
+					<div className='flex items-center gap-4'>
+						<Input
+							type='text'
+							placeholder={t('placeholder')}
+							value={query}
+							onChange={(e) => setQuery(e.target.value)}
+							className='flex-1 px-4 py-8 text-lg bg-muted rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary lg:text-xl'
+							onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+						/>
+						<Button
+							onClick={handleSendMessage}
+							disabled={loading}
+							className='bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-8 lg:px-8 lg:py-4 rounded-tr-none rounded-full'
+						>
+							<Send className='size-6' />
+						</Button>
+					</div>
 
-			{/* Chat Input */}
-			<div className='p-6 bg-card border-t flex flex-col gap-2'>
-				<div className='flex items-center gap-4'>
-					<Input
-						type='text'
-						placeholder={t('placeholder')}
-						value={query}
-						onChange={(e) => setQuery(e.target.value)}
-						className='flex-1 px-4 py-8 text-lg bg-muted rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary lg:text-xl'
-						onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-					/>
-					<Button
-						onClick={handleSendMessage}
-						disabled={loading}
-						className='bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-8 lg:px-8 lg:py-4'
-					>
-						<Send className='size-6' />
-					</Button>
+					{/* Disclaimer */}
+					<p className='text-center text-sm text-muted-foreground'>
+						{t('disclaimer')}
+					</p>
 				</div>
-
-				{/* Disclaimer */}
-				<p className='text-center text-sm text-muted-foreground'>
-					{t('disclaimer')}
-				</p>
 			</div>
-		</div>
+		</>
 	);
 };
 

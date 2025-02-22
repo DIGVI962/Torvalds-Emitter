@@ -26,7 +26,7 @@ export default async function LawyersPage({ searchParams }) {
 				<h1 className='text-2xl font-bold mb-4'>All Lawyers</h1>
 
 				{paginatedLawyers.length > 0 ? (
-					<ul className='grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
+					<ul className='grid md:grid-cols-2 gap-4 max-w-5xl mx-auto'>
 						{paginatedLawyers.map((lawyer, index) => (
 							<LawyerCard key={index} lawyer={lawyer} />
 						))}
