@@ -18,6 +18,7 @@ export const metadata = {
 
 import { ThemeProvider } from '@/components/theme-provider';
 import { Footer } from '@/components/general/Footer';
+import Header from '@/components/general/Header';
 
 export default function RootLayout({ children }) {
 	return (
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
 					enableSystem
 					disableTransitionOnChange
 				>
+					<Header />
 					{children}
 					<Footer />
 				</ThemeProvider>

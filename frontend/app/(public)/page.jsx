@@ -34,7 +34,7 @@ export default function LandingPage() {
 						preferred language. Your rights, your language, your power.
 					</p>
 
-					<Link href='/login' className={buttonVariants({ size: 'lg' })}>
+					<Link href='/chat' className={buttonVariants({ size: 'lg' })}>
 						Get Started
 					</Link>
 				</div>

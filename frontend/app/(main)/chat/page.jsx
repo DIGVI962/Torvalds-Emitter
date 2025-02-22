@@ -94,7 +94,7 @@ const ChatPage = () => {
 				<Select
 					value={i18n.language}
 					onChange={handleLanguageChange}
-					className="w-40"
+					className='w-40'
 				>
 					{languages.map((lang) => (
 						<option key={lang.code} value={lang.code}>
@@ -104,8 +104,7 @@ const ChatPage = () => {
 				</Select>
 			</header>
 
-			<div className='flex flex-col h-screen max-w-5xl mx-auto bg-background text-foreground'>
-
+			<div className='flex flex-col h-[400px] max-w-5xl mx-auto bg-background text-foreground'>
 				{/* Chat Messages */}
 				<div className='flex-1 overflow-y-auto p-6 space-y-4  px-10'>
 					{messages.length === 0 && (
@@ -121,10 +120,11 @@ const ChatPage = () => {
 						{messages.map((msg) => (
 							<Card
 								key={msg.id}
-								className={`max-w-[90%] sm:max-w-xl lg:max-w-3xl px-5 py-3 rounded-2xl break-words ${msg.sender === 'user'
-									? 'bg-primary text-primary-foreground self-end ml-auto rounded-tr-none'
-									: 'bg-card text-card-foreground rounded-tl-none'
-									}`}
+								className={`max-w-[90%] sm:max-w-xl lg:max-w-3xl px-5 py-3 rounded-2xl break-words ${
+									msg.sender === 'user'
+										? 'bg-primary text-primary-foreground self-end ml-auto rounded-tr-none'
+										: 'bg-card text-card-foreground rounded-tl-none'
+								}`}
 							>
 								<TiptapViewer content={msg.text} />
 							</Card>
