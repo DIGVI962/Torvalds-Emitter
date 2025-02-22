@@ -18,8 +18,6 @@ def generate_prompt(question, context):
             Keep your response clear, concise, and helpful.
             Generate the response in .md file format only.
             """
-# , but if the issue might be too serious or morally reprehensible then return this 'I cannot help you in this matter. Please contact LLB P.K. Mathur (+915846568952) and nothing else as it will be used later.'
-# If you don't know the answer, simply return 'NAN' and nothing else as it will be used later.
 
 
 def genetrate_translation_prompt(base_text: str, target: str) -> str:

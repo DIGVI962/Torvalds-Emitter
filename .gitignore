@@ -8,4 +8,5 @@ ml/.env
 ml/.pylintrc
 ml/settings.json
 ml/__pycache__
+ml/Vectorstore
 ml/models/__pycache__
