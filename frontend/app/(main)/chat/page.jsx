@@ -89,7 +89,7 @@ const ChatPage = () => {
 					<span className='text-muted-foreground text-xs'>
 						{threadId && `${t('threadId')} ${threadId}`}
 					</span>{' '}
-					- <span className='text-primary'>Law Saarthi</span>
+					{/* - <span className='text-primary'>Law Saarthi</span> */}
 				</div>
 				<Select
 					value={i18n.language}
